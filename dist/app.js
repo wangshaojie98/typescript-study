@@ -1,0 +1,1 @@
+document.getElementsByClassName("app")[0].innerHTML="<h1>Hello TypeScript</h1>";
