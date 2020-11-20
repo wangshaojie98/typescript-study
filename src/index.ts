@@ -1,70 +1,74 @@
 // interface, type, implements, extends
-export const interfaceP = () => {
-  interface Person {
-    // readonly name: string,
-    name: string;
-    age?: number;
-    num: number;
-    say(): void;
-    [propName: string]: any; // 只能包含上述的所有类型
-  }
-  
-  interface Teacher extends Person {
-    teach(): string
-  }
-
-  type Person1 = {
-    name: string
-  }
-
-  const getPersonName = (person: Person1) => {
-    return person.name;
-  }
-
-  const setPersonName = (person: Teacher, name: string) => {
-    person.name = name;
-    console.log(name)
-  }
-  const person = {
-    name: 'wsj',
-    age: 22,
-    num: 11,
-    h: '11',
-    say() {
-      console.log(this.age)
-    },
-    teach() {
-      return 'teach'
+export const abstractClass = () => {
+  // interface, abstract
+  class Person {
+    readonly name: string;
+    constructor(name: string) {
+      this.name = name;
     }
   }
-  const person1 = {
+
+  let person = new Person('wsj');
+  console.log(person.name)
+  // person.name = 'gy'; Cannot assign to 'name' because it is a read-only property.
+
+
+
+  // abstract class
+  abstract class Geom {
+    width: number;
+    getType() {
+      return 'Geom';
+    }
+
+    abstract getArea(): number;
+  }
+  class Circle extends Geom{
+    getArea() {
+      return 123;
+    }
+  }
+
+  class Square {
+    getArea() {}
+  }
+
+  class Triangle {
+    getArea(){
+      
+    }
+  }
+
+  // interface
+
+  interface Personal {
+    name: string;
+  }
+  interface Teacher extends Personal {
+    name: string;
+  }
+
+  interface Student extends Personal {
+    age: number;
+  }
+  // const getUserInfo = (user: Teacher | Student) => {
+  //   return user.name;
+  // }
+  const getUserInfo = (user: Personal) => {
+    return user.name;
+  }
+
+  const teacher = {
+    age: 22,
+    name: 'wsj'
+  }
+
+  const student = {
+    age: 21,
     name: 'gy'
   }
-  
-  // TS2345: Argument of type '{ name: string; age: number; num: number; h: string; say(): void; }' is not assignable to parameter of type 'Person1'.
-  // Object literal may only specify known properties, and 'age' does not exist in type 'Person1'.
-  getPersonName({
-    name: 'wsj',
-    // age: 22,
-  })
-  getPersonName(person1)
-  setPersonName(person, 'gy')
-  setPersonName(person, 'gy')
-  interface sayHello {
-    (hello: string): string
-  }
 
-  const sayHello: sayHello = (hello) => {
-    return hello;
-  }
-  sayHello('111');
-
-  class User implements Person {
-    name = 'dell';
-    num = 3;
-    say(){
-
-    }
-  }
+  console.log(getUserInfo(teacher))
+  console.log(getUserInfo(student))
 }
-interfaceP();
+abstractClass();
