@@ -1,74 +1,30 @@
-// interface, type, implements, extends
-export const abstractClass = () => {
-  // interface, abstract
-  class Person {
-    readonly name: string;
-    constructor(name: string) {
-      this.name = name;
+// 写一个try-catch Method装饰器
+function catchError(msg: string) {
+  return function(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+    try {
+      let fn = descriptor.value;
+      fn();
+    } catch (err) {
+      console.error(msg);
     }
   }
-
-  let person = new Person('wsj');
-  console.log(person.name)
-  // person.name = 'gy'; Cannot assign to 'name' because it is a read-only property.
-
-
-
-  // abstract class
-  abstract class Geom {
-    width: number;
-    getType() {
-      return 'Geom';
-    }
-
-    abstract getArea(): number;
-  }
-  class Circle extends Geom{
-    getArea() {
-      return 123;
-    }
-  }
-
-  class Square {
-    getArea() {}
-  }
-
-  class Triangle {
-    getArea(){
-      
-    }
-  }
-
-  // interface
-
-  interface Personal {
-    name: string;
-  }
-  interface Teacher extends Personal {
-    name: string;
-  }
-
-  interface Student extends Personal {
-    age: number;
-  }
-  // const getUserInfo = (user: Teacher | Student) => {
-  //   return user.name;
-  // }
-  const getUserInfo = (user: Personal) => {
-    return user.name;
-  }
-
-  const teacher = {
-    age: 22,
-    name: 'wsj'
-  }
-
-  const student = {
-    age: 21,
-    name: 'gy'
-  }
-
-  console.log(getUserInfo(teacher))
-  console.log(getUserInfo(student))
 }
-abstractClass();
+
+const userInfo: any = undefined;
+class Person {
+  @catchError('userInfo.name不存在')
+  getName() {
+    return userInfo.name;
+  }
+  
+  @catchError('userInfo.age不存在')
+  getAge() {
+      return userInfo.age;
+  }
+}
+
+let t = new Person();
+t.getName()
+t.getAge()
+
+console.log(t)
